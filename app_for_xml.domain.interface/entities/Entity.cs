@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace app_for_xml.domain.@interface.entities {
+namespace app_for_xml.domain.entities {
     public abstract class Entity {
         public virtual Int64 Id { get; set; }
         public virtual bool IsDeleted { get; set; }

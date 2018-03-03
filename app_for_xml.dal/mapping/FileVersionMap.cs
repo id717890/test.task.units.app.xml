@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using app_for_xml.domain.@interface.entities;
+using app_for_xml.domain.entities;
 
 namespace app_for_xml.dal.mapping
 {

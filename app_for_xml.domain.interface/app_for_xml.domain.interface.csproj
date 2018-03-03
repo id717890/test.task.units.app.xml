@@ -7,7 +7,7 @@
     <ProjectGuid>{BC7A94FE-4E6F-4222-B7E1-DF259380C122}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>app_for_xml.domain.interface</RootNamespace>
+    <RootNamespace>app_for_xml.domain</RootNamespace>
     <AssemblyName>app_for_xml.domain.@interface</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

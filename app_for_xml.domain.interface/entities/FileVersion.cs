@@ -1,4 +1,4 @@
-﻿namespace app_for_xml.domain.@interface.entities
+﻿namespace app_for_xml.domain.entities
 {
     using System;
 

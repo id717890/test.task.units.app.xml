@@ -1,4 +1,4 @@
-﻿namespace app_for_xml.domain.@interface.services
+﻿namespace app_for_xml.domain.services
 {
     using System;
     using System.Collections.Generic;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using app_for_xml.domain.@interface.services;
+using app_for_xml.domain.services;
 
 namespace app_for_xml.Controllers
 {
@@ -19,6 +19,12 @@ namespace app_for_xml.Controllers
         // GET: File
         public ActionResult Index()
         {
+            var i=_fileService.GetAllTypes();
+            foreach (var i2 in i)
+            {
+                ViewBag.Test = i2;
+
+            }
             return View();
         }
     }

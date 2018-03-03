@@ -7,7 +7,7 @@
     <ProjectGuid>{54C13E99-1D57-4D2E-964A-7A6E7C95F74B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>app_for_xml.dal.interface</RootNamespace>
+    <RootNamespace>app_for_xml.dal</RootNamespace>
     <AssemblyName>app_for_xml.dal.@interface</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,6 +42,20 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="service\IFileRepository.cs" />
+    <Compile Include="service\IRepository.cs" />
+    <Compile Include="service\IUnitOfWork.cs" />
+    <Compile Include="service\IUnitOfWorkProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\app_for_xml.domain.interface\app_for_xml.domain.interface.csproj">
+      <Project>{bc7a94fe-4e6f-4222-b7e1-df259380c122}</Project>
+      <Name>app_for_xml.domain.interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.infrastructure.interface\app_for_xml.infrastructure.interface.csproj">
+      <Project>{A0712EEE-246B-4F14-A4E8-288E0967CEB0}</Project>
+      <Name>app_for_xml.infrastructure.interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

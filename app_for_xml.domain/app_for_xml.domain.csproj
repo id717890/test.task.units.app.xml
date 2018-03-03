@@ -30,10 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,12 +55,25 @@
     <Compile Include="services\FileService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\app_for_xml.dal.interface\app_for_xml.dal.interface.csproj">
+      <Project>{54c13e99-1d57-4d2e-964a-7a6e7c95f74b}</Project>
+      <Name>app_for_xml.dal.interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.dal\app_for_xml.dal.csproj">
+      <Project>{d806ce4a-2179-4d6a-a62b-cbfd72170890}</Project>
+      <Name>app_for_xml.dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\app_for_xml.domain.interface\app_for_xml.domain.interface.csproj">
       <Project>{bc7a94fe-4e6f-4222-b7e1-df259380c122}</Project>
       <Name>app_for_xml.domain.interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.infrastructure\app_for_xml.infrastructure.csproj">
+      <Project>{8bb81995-f455-444b-ae9f-20efe50b1d1d}</Project>
+      <Name>app_for_xml.infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
