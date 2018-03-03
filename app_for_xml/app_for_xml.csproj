@@ -115,6 +115,9 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -153,8 +156,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,6 +203,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -215,6 +221,24 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\app_for_xml.dal\app_for_xml.dal.csproj">
+      <Project>{d806ce4a-2179-4d6a-a62b-cbfd72170890}</Project>
+      <Name>app_for_xml.dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.domain.interface\app_for_xml.domain.interface.csproj">
+      <Project>{bc7a94fe-4e6f-4222-b7e1-df259380c122}</Project>
+      <Name>app_for_xml.domain.interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.domain\app_for_xml.domain.csproj">
+      <Project>{5b74eb50-86fe-4066-b600-b32a4c78fccd}</Project>
+      <Name>app_for_xml.domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.infrastructure\app_for_xml.infrastructure.csproj">
+      <Project>{8bb81995-f455-444b-ae9f-20efe50b1d1d}</Project>
+      <Name>app_for_xml.infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -44,6 +44,7 @@
     <Compile Include="entities\File.cs" />
     <Compile Include="entities\FileVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\IFileService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
