@@ -47,5 +47,11 @@
     <Compile Include="services\IRepository.cs" />
     <Compile Include="services\ISqlProvider.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\app_for_xml.domain.interface\app_for_xml.domain.interface.csproj">
+      <Project>{bc7a94fe-4e6f-4222-b7e1-df259380c122}</Project>
+      <Name>app_for_xml.domain.interface</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
