@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace app_for_xml.infrastructure.@interface.services {
+namespace app_for_xml.infrastructure.services {
     public interface ILogger {
         void Info(string message);
         void Error(string message, Exception e);

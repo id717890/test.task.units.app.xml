@@ -14,13 +14,16 @@ namespace app_for_xml.domain.services
 {
     public class FileService: IFileService
     {
-        private Repository<File> _repository;
-        private UnitOfWork _unitOfWork;
+        //[Inject]
+        //public IUnitOfWork UnitOfWork { get; set; }
 
-        public FileService()
+        private readonly IRepository<File> _repository;
+        //private UnitOfWork _unitOfWork;
+
+        public FileService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork=new UnitOfWork(new XmlContext());
-            _repository = _unitOfWork.Repository<File>();
+            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            _repository = unitOfWork.Repository<File>();
         }
 
         //[Inject]

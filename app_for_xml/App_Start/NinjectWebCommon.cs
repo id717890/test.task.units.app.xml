@@ -1,6 +1,8 @@
 using System;
 using System.Web;
 using app_for_xml;
+using app_for_xml.dal.service;
+using app_for_xml.dal.services;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;
@@ -46,7 +48,7 @@ namespace app_for_xml
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 // unit of work per request
-                //kernel.Bind<mfc.dal.services.IUnitOfWork>().To<mfc.dal.services.UnitOfWork>().InRequestScope();
+                kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
 
                 RegisterServices(kernel);
                 return kernel;
@@ -66,7 +68,7 @@ namespace app_for_xml
         {
             kernel.Load(new app_for_xml.domain.CompositeModule());
             //kernel.Load(new app_for_xml.infrastructure.CompositeModule());
-            kernel.Load(new app_for_xml.dal.CompositeModule());
+            //kernel.Load(new app_for_xml.dal.CompositeModule());
         }
     }
 }

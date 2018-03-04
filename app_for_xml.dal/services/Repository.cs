@@ -10,13 +10,14 @@ namespace app_for_xml.dal.services
 {
     public class Repository<T>: IRepository<T> where T : Entity
     {
-        private readonly XmlContext context;
-        private IDbSet<T> entities;
-        string errorMessage = string.Empty;
+        private readonly XmlContext _context;
+        private IDbSet<T> _entities;
+        string _errorMessage = string.Empty;
+        private IUnitOfWork _unitOfWork;
 
-        public Repository(XmlContext context)
+        public Repository(IUnitOfWork unitOfWork)
         {
-            this.context = context;
+            this._unitOfWork = unitOfWork;
         }
 
         public T GetById(object id)
@@ -33,7 +34,7 @@ namespace app_for_xml.dal.services
                     throw new ArgumentNullException("entity");
                 }
                 this.Entities.Add(entity);
-                this.context.SaveChanges();
+                this._context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -42,10 +43,10 @@ namespace app_for_xml.dal.services
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        errorMessage += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
+                        _errorMessage += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
                     }
                 }
-                throw new Exception(errorMessage, dbEx);
+                throw new Exception(_errorMessage, dbEx);
             }
         }
 
@@ -72,7 +73,7 @@ namespace app_for_xml.dal.services
                 {
                     throw new ArgumentNullException("entity");
                 }
-                this.context.SaveChanges();
+                this._context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -80,11 +81,11 @@ namespace app_for_xml.dal.services
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        errorMessage += Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        _errorMessage += Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
                     }
                 }
 
-                throw new Exception(errorMessage, dbEx);
+                throw new Exception(_errorMessage, dbEx);
             }
         }
 
@@ -108,7 +109,7 @@ namespace app_for_xml.dal.services
                 }
 
                 this.Entities.Remove(entity);
-                this.context.SaveChanges();
+                this._context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -117,10 +118,10 @@ namespace app_for_xml.dal.services
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        errorMessage += Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        _errorMessage += Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
                     }
                 }
-                throw new Exception(errorMessage, dbEx);
+                throw new Exception(_errorMessage, dbEx);
             }
         }
 
@@ -136,11 +137,11 @@ namespace app_for_xml.dal.services
         {
             get
             {
-                if (entities == null)
+                if (_entities == null)
                 {
-                    entities = context.Set<T>();
+                    _entities = _context.Set<T>();
                 }
-                return entities;
+                return _entities;
             }
         }
     }

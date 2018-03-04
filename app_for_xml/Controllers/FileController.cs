@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using app_for_xml.domain.services;
+using Ninject;
 
 namespace app_for_xml.Controllers
 {
@@ -19,7 +20,7 @@ namespace app_for_xml.Controllers
         // GET: File
         public ActionResult Index()
         {
-            var i=_fileService.GetAllTypes();
+            var i= _fileService.GetAllTypes();
             foreach (var i2 in i)
             {
                 ViewBag.Test = i2;

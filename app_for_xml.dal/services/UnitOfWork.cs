@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using app_for_xml.dal.service;
 using app_for_xml.domain.entities;
 
 namespace app_for_xml.dal.services
 {
-    public class UnitOfWork
+    public class UnitOfWork: IUnitOfWork
     {
         private readonly XmlContext context;
         private bool disposed;
@@ -43,7 +44,7 @@ namespace app_for_xml.dal.services
             disposed = true;
         }
 
-        public Repository<T> Repository<T>() where T : Entity
+        public IRepository<T> Repository<T>() where T : Entity
         {
             if (repositories == null)
             {
@@ -55,7 +56,7 @@ namespace app_for_xml.dal.services
             if (!repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(Repository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)),context);
                 repositories.Add(type, repositoryInstance);
             }
             return (Repository<T>)repositories[type];

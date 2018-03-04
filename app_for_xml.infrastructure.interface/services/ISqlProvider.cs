@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace app_for_xml.infrastructure.@interface.services {
+namespace app_for_xml.infrastructure.services {
     /// <summary>
     /// Интерфейс описывает функционал для работы с подключение к СУБД Sql-Server
     /// </summary>
