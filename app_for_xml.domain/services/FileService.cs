@@ -17,12 +17,13 @@ namespace app_for_xml.domain.services
         //[Inject]
         //public IUnitOfWork UnitOfWork { get; set; }
 
-        private readonly IRepository<File> _repository;
+        private IRepository<File> _repository;
         //private UnitOfWork _unitOfWork;
 
         public FileService(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            //if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            //var u = new UnitOfWork(new XmlContext());
             _repository = unitOfWork.Repository<File>();
         }
 

@@ -68,7 +68,7 @@ namespace app_for_xml
         {
             kernel.Load(new app_for_xml.domain.CompositeModule());
             //kernel.Load(new app_for_xml.infrastructure.CompositeModule());
-            //kernel.Load(new app_for_xml.dal.CompositeModule());
+            kernel.Load(new app_for_xml.dal.CompositeModule());
         }
     }
 }

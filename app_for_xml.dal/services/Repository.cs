@@ -13,11 +13,12 @@ namespace app_for_xml.dal.services
         private readonly XmlContext _context;
         private IDbSet<T> _entities;
         string _errorMessage = string.Empty;
-        private IUnitOfWork _unitOfWork;
+        //private IUnitOfWork _unitOfWork;
 
-        public Repository(IUnitOfWork unitOfWork)
+        public Repository(XmlContext context)
         {
-            this._unitOfWork = unitOfWork;
+            _context = context;
+            //this._unitOfWork = unitOfWork;
         }
 
         public T GetById(object id)

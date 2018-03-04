@@ -56,7 +56,7 @@ namespace app_for_xml.dal.services
             if (!repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(Repository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)),context);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
                 repositories.Add(type, repositoryInstance);
             }
             return (Repository<T>)repositories[type];

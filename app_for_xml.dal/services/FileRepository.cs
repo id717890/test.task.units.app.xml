@@ -7,7 +7,7 @@ namespace app_for_xml.dal.services
 {
     public class FileRepository : Repository<File>, IFileRepository
     {
-        public FileRepository(IUnitOfWork context) : base(context)
+        public FileRepository(XmlContext context) : base(context)
         {
         }
     }
