@@ -1,8 +1,61 @@
-﻿
+﻿@model app_for_xml.Models.FileViewModel.FileList
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index File</h2>
+<h2>Список файлов</h2>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <a href="@Url.Action("Create", "File")" class="btn btn-lg btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Новый файл</a>
+        </div>
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["success"].ToString()</p>
+            </div>
+        }
+        @if (TempData["errors"] != null)
+        {
+            <div class="alert alert-danger">
+                <p>@TempData["errors"].ToString()</p>
+            </div>
+        }
+        <table class="table table-condensed table-hover table-responsive table-striped" id="demands">
+            <colgroup>
+                <col />
+                <col />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Имя файла</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Files.Any())
+                {
+                    foreach (var file in Model.Files)
+                    {
+                        <tr>
+                            <td>@file.Id</td>
+                            <td>@file.FileName</td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="3" style="text-align: center">В системе не зарегистрированно ни одной заявки</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 

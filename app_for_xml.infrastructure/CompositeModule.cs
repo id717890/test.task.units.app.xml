@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app_for_xml.infrastructure.services;
 using Ninject.Modules;
 
 namespace app_for_xml.infrastructure
@@ -11,7 +12,7 @@ namespace app_for_xml.infrastructure
     {
         public override void Load()
         {
-            throw new NotImplementedException();
+            Kernel.Bind<IStringService>().To<StringService>().InSingletonScope();
         }
     }
 }

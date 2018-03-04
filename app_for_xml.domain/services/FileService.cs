@@ -17,14 +17,18 @@ namespace app_for_xml.domain.services
         //[Inject]
         //public IUnitOfWork UnitOfWork { get; set; }
 
-        private IRepository<File> _repository;
+        private IRepository<File> _fileRepository;
+        private IRepository<FileVersion> _fileVersionRepository;
+
+
         //private UnitOfWork _unitOfWork;
 
         public FileService(IUnitOfWork unitOfWork)
         {
             //if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
             //var u = new UnitOfWork(new XmlContext());
-            _repository = unitOfWork.Repository<File>();
+            _fileRepository = unitOfWork.Repository<File>();
+            _fileVersionRepository = unitOfWork.Repository<FileVersion>();
         }
 
         //[Inject]
@@ -33,20 +37,33 @@ namespace app_for_xml.domain.services
 
 
 
-        public IEnumerable<File> GetAllTypes()
+        public IEnumerable<File> GetAllFiles()
         {
-            return _repository.GetAll();
-            throw new NotImplementedException();
+            return _fileRepository.GetAll();
         }
 
-        public File GetTypeById(long id)
+        public File GetFileById(long id)
         {
-            throw new NotImplementedException();
+            return _fileRepository.GetById(id);
         }
 
-        public long Create(string caption)
+        public File Create(string fileName, string content)
         {
-            throw new NotImplementedException();
+            if (fileName == null) return null;
+            var file= new File
+            {
+                FileName = fileName
+            };
+            _fileRepository.Create(file);
+
+            _fileVersionRepository.Create(new FileVersion
+            {
+                File = file,
+                Data = content,
+                Updated = DateTime.Now,
+                Version = Guid.NewGuid().ToString()
+            });
+            return file;
         }
 
         public void Update(File actionType)

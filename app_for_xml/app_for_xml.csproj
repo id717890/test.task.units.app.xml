@@ -165,11 +165,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -210,10 +212,12 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\File\Create.cshtml" />
+    <Content Include="Views\File\Edit.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -244,6 +248,10 @@
     <ProjectReference Include="..\app_for_xml.domain\app_for_xml.domain.csproj">
       <Project>{5b74eb50-86fe-4066-b600-b32a4c78fccd}</Project>
       <Name>app_for_xml.domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\app_for_xml.infrastructure.interface\app_for_xml.infrastructure.interface.csproj">
+      <Project>{a0712eee-246b-4f14-a4e8-288e0967ceb0}</Project>
+      <Name>app_for_xml.infrastructure.interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\app_for_xml.infrastructure\app_for_xml.infrastructure.csproj">
       <Project>{8bb81995-f455-444b-ae9f-20efe50b1d1d}</Project>

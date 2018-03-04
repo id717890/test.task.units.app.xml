@@ -6,9 +6,9 @@
 
     public interface IFileService
     {
-        IEnumerable<File> GetAllTypes();
-        File GetTypeById(Int64 id);
-        Int64 Create(string caption);
+        IEnumerable<File> GetAllFiles();
+        File GetFileById(Int64 id);
+        File Create(string fileName, string content);
         void Update(File actionType);
         void Delete(Int64 typeId);
     }

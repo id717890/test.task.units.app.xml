@@ -45,9 +45,16 @@
   <ItemGroup>
     <Compile Include="CompositeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\StringService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\app_for_xml.infrastructure.interface\app_for_xml.infrastructure.interface.csproj">
+      <Project>{a0712eee-246b-4f14-a4e8-288e0967ceb0}</Project>
+      <Name>app_for_xml.infrastructure.interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

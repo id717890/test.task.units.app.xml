@@ -1,0 +1,27 @@
+﻿@model app_for_xml.Models.FileViewModel.CurrentFile
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    @using (Html.BeginForm("Create", "File", FormMethod.Post, new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.FileName, new { @class = "control-label", @style = "text-align: left" })
+            @Html.TextBoxFor(m => m.FileName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FileName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.TextAreaFor(m => m.FileContent, new { @class = "form-control", @rows="15" })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Создать" class="btn btn-success" />
+            @Html.ActionLink("Назад", "Index", "File", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>
+
