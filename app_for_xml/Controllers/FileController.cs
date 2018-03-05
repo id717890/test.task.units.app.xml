@@ -76,6 +76,10 @@ namespace app_for_xml.Controllers
             // Проверяем что третья часть имени содержит не более 7 любых символов
             if (!_stringService.ThirdPartShouldBeAny(model.FileName)) ModelState.AddModelError("FileName", @"Третья часть имени файла должна содержать не более 7 любым символов");
 
+            //// Проверяем что третья часть имени содержит не более 7 любых символов
+            //if (!_xmlService.IsXmlValid(model.FileContent)) ModelState.AddModelError("FileName", @"Третья часть имени файла должна содержать не более 7 любым символов");
+
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -84,7 +88,7 @@ namespace app_for_xml.Controllers
             try
             {
                 var file = _fileService.Create(model.FileName, model.FileContent);
-                if (file != null) return RedirectToAction("Edit", new { id = file.Id, vesrion = 0 });
+                if (file != null) return RedirectToAction("Edit", "File", new { id = file.Id, vesrion = 0 });
                 return RedirectToAction("Index", "Error", new { message = "Пустой объект" });
             }
             catch (Exception e)
@@ -93,7 +97,7 @@ namespace app_for_xml.Controllers
             }
         }
 
-        public ActionResult Edit(long id, long version)
+        public ActionResult Edit(long id, long version = 0)
         {
             try
             {
@@ -113,7 +117,7 @@ namespace app_for_xml.Controllers
                 //return File(Encoding.UTF8.GetBytes(x), "application/xml", "test");
 
                 //return Content(x, "text/xml");
-                var fileVesion= version==0 ? file.GetLatestVersion() : file.GetVersionById(version);
+                var fileVesion = version == 0 ? file.GetLatestVersion() : file.GetVersionById(version);
                 var content = _xmlService.CreateXmlContent(file.FileName, fileVesion.Version, fileVesion.Updated, fileVesion.Data);
 
                 var model = new FileViewModel.CurrentFile(file, HttpUtility.HtmlDecode(content));
@@ -154,27 +158,27 @@ namespace app_for_xml.Controllers
             }
             try
             {
+                // Если имя файла поменялось то это уже другой файл, поэтому создаем новый файл в БД
                 if (file.FileName != model.FileName)
                 {
-                    
+                    var newFile = _fileService.Create(model.FileName, _xmlService.ExtractOnlyContent(model.FileContent));
+                    if (newFile != null) return RedirectToAction("Edit", "File", new { id = newFile.Id, vesrion = 0 });
+                    return RedirectToAction("Index", "Error", new { message = "Пустой объект" });
                 }
+                // Если имя файла не поменялось то создаем новую версию текущего файла
                 else
                 {
                     if (_xmlService.IsXmlValid(model.FileContent))
                     {
-                        var i = _xmlService.ExtractOnlyContent(model.FileContent);
                         _fileService.CreateVersion(file.Id, _xmlService.ExtractOnlyContent(model.FileContent));
                     }
-
-                    //_fileService.CreateVersion(file.Id, model.FileContent);
-
-                    //_fileService.Update();
-
+                    else
+                    {
+                        TempData["errors"] = "В XML файле обнаружены ошибки";
+                        return View(model);
+                    }
                 }
-                return RedirectToAction("Edit", new {id = file.Id, version = 0});
-                var file2 = _fileService.Create(model.FileName, model.FileContent);
-                if (file != null) return RedirectToAction("Edit", new { id = file.Id });
-                return View(model);
+                return RedirectToAction("Edit", new { id = file.Id, version = 0 });
             }
             catch (Exception e)
             {
@@ -204,7 +208,7 @@ namespace app_for_xml.Controllers
             {
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
-            
+
 
 
             //var output = new MemoryStream();
@@ -225,6 +229,55 @@ namespace app_for_xml.Controllers
             //    //upload.SaveAs(Server.MapPath("~/Files/" + fileName));
             //}
             //return null;
+        }
+
+        [HttpGet]
+        public ActionResult DownloadXml(long id)
+        {
+            try
+            {
+                var fileVersion = _fileService.GetFileVersionById(id);
+                if (fileVersion == null) return RedirectToAction("Index", "Error", new { message = "Объект не найден" });
+                var doc = _xmlService.CreateXmlContent(fileVersion.File.FileName, fileVersion.Version,
+                    fileVersion.Updated, fileVersion.Data);
+                return File(Encoding.UTF8.GetBytes(HttpUtility.HtmlDecode(doc)), "application/xml", fileVersion.File.FileName+".xml");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new { @message = e.Message });
+            }
+
+
+            //var xml = new XDocument();
+
+            //var el1=new XElement("test1","test1");
+            //var el2=new XElement("test2","test2");
+            //var content=new XElement("content");
+            //content.Add(el1);
+            //content.Add(el2);
+
+            //xml.Add(content);
+
+            //var x = xml.ToString();
+            //return File(Encoding.UTF8.GetBytes(x), "application/xml", "test");
+
+            //return Content(x, "text/xml");
+
+
+        }
+
+        [HttpGet]
+        public ActionResult Delete(long id)
+        {
+            try
+            {
+                _fileService.Delete(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new { @message = e.Message });
+            }
         }
     }
 }

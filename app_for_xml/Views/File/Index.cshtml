@@ -10,11 +10,11 @@
 {
     <script type="text/javascript">
         $("#upload-btn").on("click",
-            function() {
+            function () {
                 $("#file-upload").click();
             });
 
-        $("#file-upload").change(function() {
+        $("#file-upload").change(function () {
             $("#upload-form").submit();
         });
     </script>
@@ -24,9 +24,9 @@
     <div class="col-xs-12">
         <div class="form-group">
             <a href="@Url.Action("Create", "File")" class="btn btn-lg btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Новый файл</a>
-            <a href="#" class="btn btn-lg btn-primary" id="upload-btn"><i class="fa fa-plus" aria-hidden="true"></i> Загрузить из файла</a>
+            <a href="#" class="btn btn-lg btn-info" id="upload-btn"><i class="fa fa-download" aria-hidden="true"></i> Загрузить из файла</a>
         </div>
-        @using (Html.BeginForm("UploadXml", "File", FormMethod.Post, new {id="upload-form", enctype="multipart/form-data", @class="hidden"}))
+        @using (Html.BeginForm("UploadXml", "File", FormMethod.Post, new { id = "upload-form", enctype = "multipart/form-data", @class = "hidden" }))
         {
             <input type="file" name="upload" id="file-upload" accept="application/xml" /><br>
             <input type="submit" value="Загрузить" />
@@ -63,20 +63,20 @@
                     var i = 1;
                     foreach (var file in Model.Files)
                     {
-                <tr>
-                    <td>@i</td>
-                    <td>@file.FileName</td>
-                    <td>
-                        <a href="@Url.Action("Edit", "File", new {id = file.Id, version = 0})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
-                        <a href="@Url.Action("Edit", "File", new {id = file.Id, version = 0})" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>@i</td>
+                            <td>@file.FileName</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "File", new {id = file.Id, version = 0})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
+                                <a href="@Url.Action("Delete", "File", new {id = file.Id })" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
+                            </td>
+                        </tr>
                         i++;
                     }
                 }
                 else
                 {
-                    <tr><td colspan="3" style="text-align: center">В системе не зарегистрированно ни одной заявки</td></tr>
+                    <tr><td colspan="3" style="text-align: center">Файлы отсутствуют</td></tr>
                 }
             </tbody>
         </table>

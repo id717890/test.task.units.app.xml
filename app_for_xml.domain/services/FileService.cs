@@ -55,6 +55,11 @@ namespace app_for_xml.domain.services
             return _fileRepository.GetById(id);
         }
 
+        public FileVersion GetFileVersionById(long id)
+        {
+            return _fileVersionRepository.GetById(id);
+        }
+
         public File Create(string fileName, string content)
         {
             if (fileName == null) return null;
@@ -96,9 +101,11 @@ namespace app_for_xml.domain.services
             _fileRepository.Update(file);
         }
 
-        public void Delete(long typeId)
+        public void Delete(long id)
         {
-            throw new NotImplementedException();
+            var file = GetFileById(id);
+            if (file == null) return;
+            _fileRepository.Delete(file);
         }
     }
 }

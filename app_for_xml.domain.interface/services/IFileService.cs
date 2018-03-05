@@ -8,9 +8,10 @@
     {
         IEnumerable<File> GetAllFiles();
         File GetFileById(Int64 id);
+        FileVersion GetFileVersionById(long id);
         File Create(string fileName, string content);
         FileVersion CreateVersion(long fileId, string content);
         void Update(File file);
-        void Delete(Int64 typeId);
+        void Delete(long id);
     }
 }

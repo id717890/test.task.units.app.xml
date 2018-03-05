@@ -57,34 +57,31 @@ namespace app_for_xml.infrastructure.services
                 var xElement = XDocument.Parse(str);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
         }
 
-        /// <summary>
-        /// Извлекает из xml Тег COntent
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
         public string ExtractOnlyContent(string str)
         {
             var doc = XDocument.Parse(str);
             doc.Descendants().First(x => x.Name == "Name").Remove();
             doc.Descendants().First(x => x.Name == "DateTime").Remove();
-            var nodes = doc.Root.Descendants();
-            var data = "";
-            foreach (var i in nodes)
-            {
-                data += i + "\r\n";
 
-            }
+            const string r = @"<File\s*.*?>\s*(.*)\s*\</File>";
+            Regex regex = new Regex(r, RegexOptions.Singleline);
+            var data = regex.Match(doc.ToString()).Groups[1].Value;
+            //string s = v.Groups[1].ToString();
 
 
-            //const string r = "<Content>.*?</Content>";
-            //var reqex = new Regex(r);
-            //var data = reqex.Matches(str);
+            //var nodes = doc.Root.Descendants();
+            //var data = "";
+            //foreach (var i in nodes)
+            //{
+            //    data = data + i + "\r\n";
+
+            //}
             return data;
         }
     }

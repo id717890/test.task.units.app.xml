@@ -20,14 +20,13 @@ namespace app_for_xml.dal.Migrations
             context.Database.ExecuteSqlCommand("delete from Files");
 
             context.Files.AddOrUpdate(
-                new File{ Id = 1, FileName = "Test1" },
-                new File{ Id = 2, FileName = "Test2" }
+                new File{ Id = 1, FileName = "тест_1_й@!s" }
                 );
             context.SaveChanges();
 
             context.FileVersions.AddOrUpdate(
-                new FileVersion() { File = context.Files.FirstOrDefault(), Data = "1", Updated = DateTime.Now.AddHours(-10), Version = Guid.NewGuid().ToString(), Id = 1}, 
-                new FileVersion() { File = context.Files.FirstOrDefault(), Data = "123", Updated = DateTime.Now.AddMinutes(-10), Version = Guid.NewGuid().ToString(), Id = 2}
+                new FileVersion() { File = context.Files.FirstOrDefault(), Data = "<tag>1</tag1>", Updated = DateTime.Now.AddHours(-10), Version = Guid.NewGuid().ToString(), Id = 1}, 
+                new FileVersion() { File = context.Files.FirstOrDefault(), Data = null, Updated = DateTime.Now.AddMinutes(-10), Version = Guid.NewGuid().ToString(), Id = 2}
                 );
             context.SaveChanges();
 
