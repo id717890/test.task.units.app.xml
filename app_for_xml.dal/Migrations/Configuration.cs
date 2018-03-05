@@ -26,8 +26,8 @@ namespace app_for_xml.dal.Migrations
             context.SaveChanges();
 
             context.FileVersions.AddOrUpdate(
-                new FileVersion() { File = context.Files.FirstOrDefault(), Updated = DateTime.Now, Version = "1", Id = 1}, 
-                new FileVersion() { File = context.Files.FirstOrDefault(), Data = "", Updated = DateTime.Now.AddMinutes(-10), Version = "2", Id = 2}
+                new FileVersion() { File = context.Files.FirstOrDefault(), Updated = DateTime.Now, Version = Guid.NewGuid().ToString(), Id = 1}, 
+                new FileVersion() { File = context.Files.FirstOrDefault(), Data = "", Updated = DateTime.Now.AddMinutes(-10), Version = Guid.NewGuid().ToString(), Id = 2}
                 );
             context.SaveChanges();
 

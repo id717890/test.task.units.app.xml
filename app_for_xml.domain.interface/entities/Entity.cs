@@ -2,8 +2,8 @@
 
 namespace app_for_xml.domain.entities {
     public abstract class Entity {
-        public virtual Int64 Id { get; set; }
-        public virtual bool IsDeleted { get; set; }
+        public  Int64 Id { get; set; }
+        public  bool IsDeleted { get; set; }
 
         public override bool Equals(object obj) {
             if (obj == null) {

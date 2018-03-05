@@ -7,13 +7,13 @@ namespace app_for_xml.dal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreateTableFileVersionsAndFiles : IMigrationMetadata
+    public sealed partial class CreateTables : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateTableFileVersionsAndFiles));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateTables));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803030659087_CreateTableFileVersionsAndFiles"; }
+            get { return "201803041829130_CreateTables"; }
         }
         
         string IMigrationMetadata.Source

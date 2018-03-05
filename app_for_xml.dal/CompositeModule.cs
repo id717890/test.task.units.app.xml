@@ -15,6 +15,8 @@ namespace app_for_xml.dal
         public override void Load()
         {
             //Kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
+            Kernel.Bind(typeof(IFileRepository)).To(typeof(FileRepository));
+            Kernel.Bind(typeof(IFileVersionRepository)).To(typeof(FileVersionRepository));
         }
     }
 }

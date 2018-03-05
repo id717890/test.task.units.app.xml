@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -17,14 +18,19 @@ namespace app_for_xml.Controllers
     {
         private readonly IFileService _fileService;
         private readonly IStringService _stringService;
+        private readonly IXmlService _xmlService;
 
-        public FileController(IFileService fileService, IStringService stringService)
+        public FileController(IFileService fileService, IStringService stringService, IXmlService xmlService)
         {
             _fileService = fileService;
             _stringService = stringService;
+            _xmlService = xmlService;
         }
 
-        // GET: File
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             try
@@ -83,7 +89,7 @@ namespace app_for_xml.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Index", "Error", new { @message = e.Message });
+                return RedirectToAction("Index", "Error", new { message = e.Message });
             }
         }
 
@@ -93,28 +99,126 @@ namespace app_for_xml.Controllers
             {
                 var file = _fileService.GetFileById(id);
                 if (file == null) return RedirectToAction("Index", "Error", new { message = "Объект не найден" });
-                var xml = new XDocument();
+                //var xml = new XDocument();
 
-                var el1=new XElement("test1","test1");
-                var el2=new XElement("test2","test2");
-                var content=new XElement("content");
-                content.Add(el1);
-                content.Add(el2);
+                //var el1=new XElement("test1","test1");
+                //var el2=new XElement("test2","test2");
+                //var content=new XElement("content");
+                //content.Add(el1);
+                //content.Add(el2);
 
-                xml.Add(content);
+                //xml.Add(content);
 
-                var x = xml.ToString();
-                return File(Encoding.UTF8.GetBytes(x), "application/xml", "test");
+                //var x = xml.ToString();
+                //return File(Encoding.UTF8.GetBytes(x), "application/xml", "test");
 
-                return Content(x, "text/xml");
+                //return Content(x, "text/xml");
+                var latestVersion = file.GetLatestVersion();
+                var content = _xmlService.CreateXmlContent(file.FileName, latestVersion.Version,latestVersion.Updated,latestVersion.Data);
 
-                var model = new FileViewModel.CurrentFile(file);
+                var model = new FileViewModel.CurrentFile(file, content);
                 return View(model);
             }
             catch (Exception e)
             {
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(FileViewModel.CurrentFile model)
+        {
+            var file = _fileService.GetFileById(model.Id);
+            model.File = file;
+            //Проверяем модель на валидность
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Проверяем что имя состоит из трех частей
+            if (!_stringService.CheckFormat(model.FileName)) ModelState.AddModelError("FileName", @"Имя файла не соответствует формату");
+
+            // Проверяем что первая часть имени содержит только русские буквы (не более 100)
+            if (!_stringService.FirstPartShouldBeCyrilic(model.FileName)) ModelState.AddModelError("FileName", @"Первая часть имени файла должна содержать только русские буквы (не более 100 символов)");
+
+            // Проверяем что вторая часть имени содержит только цифры (не более 1 символа)
+            if (!_stringService.SecondPartShouldBeNumber(model.FileName)) ModelState.AddModelError("FileName", @"Вторая часть имени файла должна содержать только цифры (не более 1 символа)");
+
+            // Проверяем что третья часть имени содержит не более 7 любых символов
+            if (!_stringService.ThirdPartShouldBeAny(model.FileName)) ModelState.AddModelError("FileName", @"Третья часть имени файла должна содержать не более 7 любым символов");
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                if (file.FileName != model.FileName)
+                {
+                    
+                }
+                else
+                {
+                    //_fileService.Update();
+
+                    //_fileService.Update();
+
+                }
+
+                var file2 = _fileService.Create(model.FileName, model.FileContent);
+                if (file != null) return RedirectToAction("Edit", new { id = file.Id });
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new { @message = e.Message });
+            }
+
+
+
+        }
+
+
+        [HttpPost]
+        public ActionResult UploadXml(HttpPostedFileBase upload)
+        {
+            try
+            {
+                var reader = new StreamReader(upload.InputStream);
+                var doc = XDocument.Load(reader);
+
+                return View("Create", new FileViewModel.CurrentFile
+                {
+                    FileContent = doc.ToString(),
+                    FileName = Path.GetFileNameWithoutExtension(upload.FileName)
+                });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new { @message = e.Message });
+            }
+            
+
+
+            //var output = new MemoryStream();
+            //var writer = new StreamWriter(output);
+
+            //writer.Write("{0} baskets", count);
+            //output.Seek(0, SeekOrigin.Begin);
+
+            //return File(output, "text/plain", "count.txt");
+
+
+            //if (upload != null)
+            //{
+            //    XDocument xml= XDocument.Load(System.IO.Path.GetFileName(upload.InputStream.));
+            //    // получаем имя файла
+            //    string fileName = System.IO.Path.GetFileName(upload.FileName);
+            //    // сохраняем файл в папку Files в проекте
+            //    //upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+            //}
+            //return null;
         }
     }
 }

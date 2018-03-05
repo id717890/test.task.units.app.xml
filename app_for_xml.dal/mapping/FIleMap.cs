@@ -16,6 +16,7 @@ namespace app_for_xml.dal.mapping
             HasKey(x => x.Id);
             Property(x => x.Id).HasColumnName("id");
             Property(x => x.FileName).HasColumnName("file_name");
+            HasMany(x => x.Versions).WithRequired(x => x.File);
         }
     }
 }

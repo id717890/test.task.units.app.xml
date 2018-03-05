@@ -43,6 +43,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="service\IFileRepository.cs" />
+    <Compile Include="service\IFileVersionRepository.cs" />
     <Compile Include="service\IRepository.cs" />
     <Compile Include="service\IUnitOfWork.cs" />
     <Compile Include="service\IUnitOfWorkProvider.cs" />

@@ -46,6 +46,7 @@
     <Compile Include="services\ILogger.cs" />
     <Compile Include="services\ISqlProvider.cs" />
     <Compile Include="services\IStringService.cs" />
+    <Compile Include="services\IXmlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\app_for_xml.domain.interface\app_for_xml.domain.interface.csproj">

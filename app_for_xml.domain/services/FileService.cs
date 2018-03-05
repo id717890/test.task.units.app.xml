@@ -17,18 +17,26 @@ namespace app_for_xml.domain.services
         //[Inject]
         //public IUnitOfWork UnitOfWork { get; set; }
 
+        //private IFileRepository _fileRepository;
+        //private IFileVersionRepository _fileVersionRepository;
+
         private IRepository<File> _fileRepository;
         private IRepository<FileVersion> _fileVersionRepository;
 
 
         //private UnitOfWork _unitOfWork;
 
+        //public FileService(IFileRepository fileRepository, IFileVersionRepository fileVersionRepository)
         public FileService(IUnitOfWork unitOfWork)
         {
             //if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
             //var u = new UnitOfWork(new XmlContext());
+
             _fileRepository = unitOfWork.Repository<File>();
-            _fileVersionRepository = unitOfWork.Repository<FileVersion>();
+            _fileVersionRepository= unitOfWork.Repository<FileVersion>();
+
+            //_fileRepository = fileRepository;
+            //_fileVersionRepository = fileVersionRepository;
         }
 
         //[Inject]
@@ -56,19 +64,29 @@ namespace app_for_xml.domain.services
             };
             _fileRepository.Create(file);
 
-            _fileVersionRepository.Create(new FileVersion
+            var fileVersion = new FileVersion
             {
                 File = file,
                 Data = content,
                 Updated = DateTime.Now,
                 Version = Guid.NewGuid().ToString()
-            });
+            };
+
+            _fileVersionRepository.Create(fileVersion);
             return file;
         }
 
-        public void Update(File actionType)
+        public FileVersion CreateVersion(long fileId, string content)
         {
+            var file = GetFileById(fileId);
+            if (file == null) return null;
+
             throw new NotImplementedException();
+        }
+
+        public void Update(File file)
+        {
+            _fileRepository.Update(file);
         }
 
         public void Delete(long typeId)

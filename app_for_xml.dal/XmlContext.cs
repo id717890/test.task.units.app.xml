@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app_for_xml.dal.mapping;
 using app_for_xml.domain.entities;
 
 namespace app_for_xml.dal
@@ -20,5 +21,13 @@ namespace app_for_xml.dal
         public DbSet<FileVersion> FileVersions { get; set; }
         public XmlContext() : base("DefaultConnection")
         { }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Configurations.Add(new FIleMap());
+            modelBuilder.Configurations.Add(new FileVersionMap());
+        }
     }
 }
