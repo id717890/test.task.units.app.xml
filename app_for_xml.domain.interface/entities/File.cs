@@ -20,5 +20,10 @@ namespace app_for_xml.domain.entities
         {
             return Versions.SingleOrDefault(x => x.Id == Versions.Max(y => y.Id));
         }
+
+        public FileVersion GetVersionById(long id)
+        {
+            return Versions.SingleOrDefault(x => x.Id == id);
+        }
     }
 }

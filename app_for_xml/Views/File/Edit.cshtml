@@ -46,12 +46,12 @@
             @if ((Model.File !=null) && (Model.File.Versions.Any()))
             {
                 var i = 1;
-                foreach (var item in Model.File.Versions)
+                foreach (var item in Model.File.Versions.OrderByDescending(x=>x.Updated))
                 {
                     <tr>
                         <td>@i</td>
                         <td>
-                            @Html.ActionLink(item.Version,"Edit","File", new {id=item.Id})
+                            <a href="@Url.Action("Edit", "File", new {id = Model.Id, version = item.Id })">@item.Version</a>
                         </td>
                         <td>@item.Updated.ToString("dd.MM.yy HH:mm")</td>
                     </tr>

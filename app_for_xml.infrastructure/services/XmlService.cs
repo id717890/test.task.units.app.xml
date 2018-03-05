@@ -1,9 +1,13 @@
-﻿namespace app_for_xml.infrastructure.services
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.Ajax.Utilities;
+
+namespace app_for_xml.infrastructure.services
 {
     using System;
     using System.Xml.Linq;
 
-    public class XmlService: IXmlService
+    public class XmlService : IXmlService
     {
         public string CreateXmlContent(string fileName, string version, DateTime date, string content)
         {
@@ -21,12 +25,10 @@
             var dateElement = new XElement("DateTime", date.ToString("dd.MM.yy HH:mm"));
 
             //Cоздаем элемент Content где будет остальное содержимое файла
-            var contentElement = IsXml(content) ? new XElement("Content", XElement.Parse(content,LoadOptions.None)) : new XElement("Content", content);
-            fileElement.Add(nameElement);
-            fileElement.Add(dateElement);
-            fileElement.Add(contentElement);
+            var contentElement = IsXml(content) ? new XElement("Content", XElement.Parse(content, LoadOptions.None)) : new XElement("Content", content);
+            fileElement.Add(nameElement, dateElement, "\r\n"+content );
+            //fileElement.Add();
             doc.Add(fileElement);
-
             return doc.ToString();
         }
 
@@ -46,6 +48,44 @@
             {
                 return false;
             }
+        }
+
+        public bool IsXmlValid(string str)
+        {
+            try
+            {
+                var xElement = XDocument.Parse(str);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Извлекает из xml Тег COntent
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public string ExtractOnlyContent(string str)
+        {
+            var doc = XDocument.Parse(str);
+            doc.Descendants().First(x => x.Name == "Name").Remove();
+            doc.Descendants().First(x => x.Name == "DateTime").Remove();
+            var nodes = doc.Root.Descendants();
+            var data = "";
+            foreach (var i in nodes)
+            {
+                data += i + "\r\n";
+
+            }
+
+
+            //const string r = "<Content>.*?</Content>";
+            //var reqex = new Regex(r);
+            //var data = reqex.Matches(str);
+            return data;
         }
     }
 }

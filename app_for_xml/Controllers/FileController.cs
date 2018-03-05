@@ -84,7 +84,7 @@ namespace app_for_xml.Controllers
             try
             {
                 var file = _fileService.Create(model.FileName, model.FileContent);
-                if (file != null) return RedirectToAction("Edit", new { id = file.Id });
+                if (file != null) return RedirectToAction("Edit", new { id = file.Id, vesrion = 0 });
                 return RedirectToAction("Index", "Error", new { message = "Пустой объект" });
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace app_for_xml.Controllers
             }
         }
 
-        public ActionResult Edit(long id)
+        public ActionResult Edit(long id, long version)
         {
             try
             {
@@ -113,10 +113,10 @@ namespace app_for_xml.Controllers
                 //return File(Encoding.UTF8.GetBytes(x), "application/xml", "test");
 
                 //return Content(x, "text/xml");
-                var latestVersion = file.GetLatestVersion();
-                var content = _xmlService.CreateXmlContent(file.FileName, latestVersion.Version,latestVersion.Updated,latestVersion.Data);
+                var fileVesion= version==0 ? file.GetLatestVersion() : file.GetVersionById(version);
+                var content = _xmlService.CreateXmlContent(file.FileName, fileVesion.Version, fileVesion.Updated, fileVesion.Data);
 
-                var model = new FileViewModel.CurrentFile(file, content);
+                var model = new FileViewModel.CurrentFile(file, HttpUtility.HtmlDecode(content));
                 return View(model);
             }
             catch (Exception e)
@@ -160,12 +160,18 @@ namespace app_for_xml.Controllers
                 }
                 else
                 {
-                    //_fileService.Update();
+                    if (_xmlService.IsXmlValid(model.FileContent))
+                    {
+                        var i = _xmlService.ExtractOnlyContent(model.FileContent);
+                        _fileService.CreateVersion(file.Id, _xmlService.ExtractOnlyContent(model.FileContent));
+                    }
+
+                    //_fileService.CreateVersion(file.Id, model.FileContent);
 
                     //_fileService.Update();
 
                 }
-
+                return RedirectToAction("Edit", new {id = file.Id, version = 0});
                 var file2 = _fileService.Create(model.FileName, model.FileContent);
                 if (file != null) return RedirectToAction("Edit", new { id = file.Id });
                 return View(model);

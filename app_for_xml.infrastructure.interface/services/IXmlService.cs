@@ -6,5 +6,7 @@
     {
         string CreateXmlContent(string fileName, string version, DateTime date, string content);
         bool IsXml(string str);
+        bool IsXmlValid(string str);
+        string ExtractOnlyContent(string str);
     }
 }

@@ -80,8 +80,15 @@ namespace app_for_xml.domain.services
         {
             var file = GetFileById(fileId);
             if (file == null) return null;
-
-            throw new NotImplementedException();
+            var newVersion=new FileVersion()
+            {
+                File = file,
+                Updated = DateTime.Now,
+                Version = Guid.NewGuid().ToString(),
+                Data = content
+            };
+            _fileVersionRepository.Create(newVersion);
+            return newVersion;
         }
 
         public void Update(File file)
