@@ -1,4 +1,4 @@
-﻿namespace app_for_xml.dal.service
+﻿namespace app_for_xml.dal.services
 {
     using domain.entities;
 

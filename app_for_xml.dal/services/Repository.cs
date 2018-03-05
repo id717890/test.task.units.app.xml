@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Linq;
-using app_for_xml.dal.service;
-using app_for_xml.domain.entities;
-
-namespace app_for_xml.dal.services
+﻿namespace app_for_xml.dal.services
 {
-    public class Repository<T>: IRepository<T> where T : Entity
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Validation;
+    using System.Linq;
+    using domain.entities;
+
+    public class Repository<T> : IRepository<T> where T : Entity
     {
         private readonly XmlContext _context;
         private IDbSet<T> _entities;
         string _errorMessage = string.Empty;
-        //private IUnitOfWork _unitOfWork;
 
         public Repository(XmlContext context)
         {
             _context = context;
-            //this._unitOfWork = unitOfWork;
         }
 
         public T GetById(object id)
@@ -56,16 +53,6 @@ namespace app_for_xml.dal.services
             return this.Entities;
         }
 
-        //public T GetById(long id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void Create(T entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public void Update(T entity)
         {
             try
@@ -94,11 +81,6 @@ namespace app_for_xml.dal.services
         {
             throw new NotImplementedException();
         }
-
-        //public void Delete(long id)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void Delete(T entity)
         {

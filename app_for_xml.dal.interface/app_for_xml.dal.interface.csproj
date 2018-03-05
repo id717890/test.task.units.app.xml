@@ -40,13 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="service\IFileRepository.cs" />
-    <Compile Include="service\IFileVersionRepository.cs" />
-    <Compile Include="service\IRepository.cs" />
-    <Compile Include="service\IUnitOfWork.cs" />
-    <Compile Include="service\IUnitOfWorkProvider.cs" />
+    <Compile Include="services\IFileRepository.cs" />
+    <Compile Include="services\IFileVersionRepository.cs" />
+    <Compile Include="services\IRepository.cs" />
+    <Compile Include="services\IUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\app_for_xml.domain.interface\app_for_xml.domain.interface.csproj">

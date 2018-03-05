@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using System.Text.RegularExpressions;
-using Microsoft.Ajax.Utilities;
-
-namespace app_for_xml.infrastructure.services
+﻿namespace app_for_xml.infrastructure.services
 {
     using System;
     using System.Xml.Linq;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     public class XmlService : IXmlService
     {
@@ -26,7 +24,7 @@ namespace app_for_xml.infrastructure.services
 
             //Cоздаем элемент Content где будет остальное содержимое файла
             var contentElement = IsXml(content) ? new XElement("Content", XElement.Parse(content, LoadOptions.None)) : new XElement("Content", content);
-            fileElement.Add(nameElement, dateElement, "\r\n"+content );
+            fileElement.Add(nameElement, dateElement, "\r\n" + content);
             //fileElement.Add();
             doc.Add(fileElement);
             return doc.ToString();

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace app_for_xml.infrastructure.services
+﻿namespace app_for_xml.infrastructure.services
 {
-    public class StringService: IStringService
+    using System.Text.RegularExpressions;
+
+    public class StringService : IStringService
     {
         public bool CheckFormat(string str)
         {

@@ -62,7 +62,6 @@
     <Compile Include="services\FileRepository.cs" />
     <Compile Include="services\FileVersionRepository.cs" />
     <Compile Include="services\Repository.cs" />
-    <Compile Include="services\Repository2.cs" />
     <Compile Include="services\UnitOfWork.cs" />
     <Compile Include="XmlContext.cs" />
   </ItemGroup>

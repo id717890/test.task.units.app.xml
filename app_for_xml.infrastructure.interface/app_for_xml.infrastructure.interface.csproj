@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\ILogger.cs" />
-    <Compile Include="services\ISqlProvider.cs" />
     <Compile Include="services\IStringService.cs" />
     <Compile Include="services\IXmlService.cs" />
   </ItemGroup>

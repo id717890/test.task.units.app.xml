@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using app_for_xml.domain.entities;
-
-namespace app_for_xml.dal.mapping
+﻿namespace app_for_xml.dal.mapping
 {
+    using System.Data.Entity.ModelConfiguration;
+    using domain.entities;
+
     public class FIleMap: EntityTypeConfiguration<File>
     {
         public FIleMap()

@@ -1,7 +1,6 @@
 using System;
 using System.Web;
 using app_for_xml;
-using app_for_xml.dal.service;
 using app_for_xml.dal.services;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;

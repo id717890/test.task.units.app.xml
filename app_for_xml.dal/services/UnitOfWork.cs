@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using app_for_xml.dal.service;
-using app_for_xml.domain.entities;
-
-namespace app_for_xml.dal.services
+﻿namespace app_for_xml.dal.services
 {
-    public class UnitOfWork: IUnitOfWork
+    using System;
+    using System.Collections.Generic;
+    using domain.entities;
+
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly XmlContext context;
-        private bool disposed;
-        private Dictionary<string, object> repositories;
+        private readonly XmlContext _context;
+        private bool _disposed;
+        private Dictionary<string, object> _repositories;
 
         public UnitOfWork(XmlContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public UnitOfWork()
         {
-            context = new XmlContext();
+            _context = new XmlContext();
         }
 
         public void Dispose()
@@ -30,37 +28,37 @@ namespace app_for_xml.dal.services
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
-            disposed = true;
+            _disposed = true;
         }
 
         public IRepository<T> Repository<T>() where T : Entity
         {
-            if (repositories == null)
+            if (_repositories == null)
             {
-                repositories = new Dictionary<string, object>();
+                _repositories = new Dictionary<string, object>();
             }
 
             var type = typeof(T).Name;
 
-            if (!repositories.ContainsKey(type))
+            if (!_repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(Repository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
-                repositories.Add(type, repositoryInstance);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
+                _repositories.Add(type, repositoryInstance);
             }
-            return (Repository<T>)repositories[type];
+            return (Repository<T>)_repositories[type];
         }
     }
 }

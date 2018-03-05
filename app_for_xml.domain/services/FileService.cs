@@ -1,49 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using app_for_xml.dal;
-using app_for_xml.dal.service;
-using app_for_xml.dal.services;
-using app_for_xml.domain.entities;
-using app_for_xml.domain.services;
-using Ninject;
-
-namespace app_for_xml.domain.services
+﻿namespace app_for_xml.domain.services
 {
+    using System;
+    using System.Collections.Generic;
+    using dal.services;
+    using entities;
+
     public class FileService: IFileService
     {
-        //[Inject]
-        //public IUnitOfWork UnitOfWork { get; set; }
-
-        //private IFileRepository _fileRepository;
-        //private IFileVersionRepository _fileVersionRepository;
-
         private IRepository<File> _fileRepository;
         private IRepository<FileVersion> _fileVersionRepository;
-
-
-        //private UnitOfWork _unitOfWork;
-
-        //public FileService(IFileRepository fileRepository, IFileVersionRepository fileVersionRepository)
         public FileService(IUnitOfWork unitOfWork)
         {
-            //if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
-            //var u = new UnitOfWork(new XmlContext());
-
             _fileRepository = unitOfWork.Repository<File>();
             _fileVersionRepository= unitOfWork.Repository<FileVersion>();
-
-            //_fileRepository = fileRepository;
-            //_fileVersionRepository = fileVersionRepository;
         }
-
-        //[Inject]
-        //public IUnitOfWorkProvider UnitOfWorkProvider { get; set; }
-
-
-
 
         public IEnumerable<File> GetAllFiles()
         {
