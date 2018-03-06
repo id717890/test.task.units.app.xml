@@ -5,6 +5,7 @@
 /**/bin/Debug/**
 /**/obj/**
 /**/obj/Debug/**
+/app_for_xml/Logs
 **.suo
 **.user
 /**/bin

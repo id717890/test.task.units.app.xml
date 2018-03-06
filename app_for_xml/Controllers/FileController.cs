@@ -10,18 +10,19 @@
     using infrastructure.services;
     using Models;
 
-
     public class FileController : Controller
     {
         private readonly IFileService _fileService;
         private readonly IStringService _stringService;
         private readonly IXmlService _xmlService;
+        private readonly ILogger _logger;
 
-        public FileController(IFileService fileService, IStringService stringService, IXmlService xmlService)
+        public FileController(IFileService fileService, IStringService stringService, IXmlService xmlService, ILogger logger)
         {
             _fileService = fileService;
             _stringService = stringService;
             _xmlService = xmlService;
+            _logger = logger;
         }
 
         public ActionResult Index()
@@ -36,8 +37,8 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.Error(e.Message);
+                return RedirectToAction("Index", "Error", new { message = e.Message });
             }
         }
 
@@ -80,12 +81,19 @@
 
             try
             {
+                _logger.Info("Начато сохранение файла"+model.FileName);
                 var file = _fileService.Create(model.FileName, model.FileContent);
-                if (file != null) return RedirectToAction("Edit", "File", new { id = file.Id, vesrion = 0 });
+                if (file != null) 
+                {
+                    _logger.Info("Файл успешно сохранен" + model.FileName);
+                    return RedirectToAction("Edit", "File", new { id = file.Id, vesrion = 0 });
+
+                }
                 return RedirectToAction("Index", "Error", new { message = "Пустой объект" });
             }
             catch (Exception e)
             {
+                _logger.Error(e.Message);
                 return RedirectToAction("Index", "Error", new { message = e.Message });
             }
         }
@@ -103,6 +111,7 @@
             }
             catch (Exception e)
             {
+                _logger.Error(e.Message);
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
         }
@@ -160,6 +169,7 @@
             }
             catch (Exception e)
             {
+                _logger.Error(e.Message);
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
         }
@@ -181,6 +191,7 @@
             }
             catch (Exception e)
             {
+                _logger.Error(e.Message);
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
         }
@@ -198,6 +209,7 @@
             }
             catch (Exception e)
             {
+                _logger.Error(e.Message);
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
         }
@@ -212,6 +224,7 @@
             }
             catch (Exception e)
             {
+                _logger.Error(e.Message);
                 return RedirectToAction("Index", "Error", new { @message = e.Message });
             }
         }

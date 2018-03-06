@@ -7,6 +7,7 @@
     {
         public override void Load()
         {
+            Kernel.Bind<ILogger>().To<Logger>();
             Kernel.Bind<IStringService>().To<StringService>().InSingletonScope();
             Kernel.Bind<IXmlService>().To<XmlService>().InSingletonScope();
         }
