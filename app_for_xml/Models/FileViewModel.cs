@@ -1,29 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Xml;
-using System.Xml.Linq;
-using app_for_xml.domain.entities;
-using app_for_xml.infrastructure.services;
-
-namespace app_for_xml.Models
+﻿namespace app_for_xml.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Web.Mvc;
+    using domain.entities;
+
     public class FileViewModel
     {
         public class FileList
         {
             public IEnumerable<File> Files { get; set; }
-        }
-
-        public class NewFile
-        {
-            [Required]
-            [Display(Name = "Имя файла")]
-            public string FileName { get; set; }
-            public string FileContent { get; set; }
         }
 
         public class CurrentFile
