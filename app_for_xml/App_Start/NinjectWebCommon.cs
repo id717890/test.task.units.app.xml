@@ -65,9 +65,9 @@ namespace app_for_xml
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Load(new app_for_xml.domain.CompositeModule());
-            kernel.Load(new app_for_xml.infrastructure.CompositeModule());
-            kernel.Load(new app_for_xml.dal.CompositeModule());
+            kernel.Load(new domain.CompositeModule());
+            kernel.Load(new infrastructure.CompositeModule());
+            kernel.Load(new dal.CompositeModule());
         }
     }
 }

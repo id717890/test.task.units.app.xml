@@ -70,24 +70,18 @@
             // Проверяем что третья часть имени содержит не более 7 любых символов
             if (!_stringService.ThirdPartShouldBeAny(model.FileName)) ModelState.AddModelError("FileName", @"Третья часть имени файла должна содержать не более 7 любым символов");
 
-            //// Проверяем что третья часть имени содержит не более 7 любых символов
-            //if (!_xmlService.IsXmlValid(model.FileContent)) ModelState.AddModelError("FileName", @"Третья часть имени файла должна содержать не более 7 любым символов");
-
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
             try
             {
-                _logger.Info("Начато сохранение файла"+model.FileName);
+                _logger.Info("Начато сохранение файла "+model.FileName);
                 var file = _fileService.Create(model.FileName, model.FileContent);
                 if (file != null) 
                 {
-                    _logger.Info("Файл успешно сохранен" + model.FileName);
+                    _logger.Info("Файл успешно сохранен " + model.FileName);
                     return RedirectToAction("Edit", "File", new { id = file.Id, vesrion = 0 });
-
                 }
                 return RedirectToAction("Index", "Error", new { message = "Пустой объект" });
             }

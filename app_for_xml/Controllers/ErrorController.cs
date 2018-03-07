@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace app_for_xml.Controllers
+﻿namespace app_for_xml.Controllers
 {
+    using System.Web.Mvc;
+
     public class ErrorController : Controller
     {
         // GET: Error
